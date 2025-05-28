@@ -1,7 +1,26 @@
 [project]
 name = "bigquery-mcp"
 version = "0.1.0"
-description = "Add your description here"
+description = "A Model Context Protocol (MCP) server that provides access to BigQuery."
 readme = "README.md"
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "google-cloud-bigquery>=3.33.0",
+    "mcp>=1.9.1",
+    "typer>=0.16.0",
+]
+
+[dependency-groups]
+dev = [
+    "mcp[cli]>=1.9.1",
+    "ruff>=0.11.11",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.uv]
+package = true
+
+[project.scripts]
+bigquery-mcp = "bigquery_mcp.main:main"
