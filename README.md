@@ -34,7 +34,7 @@ this command will open your default browser and bring you to a Google login page
 Start the server in streamable HTTP mode:
 
 ```bash
-sl-bigquery-mcp --mode streamable-http
+sl-bigquery-mcp --mode streamable-http --dataset bigquery-public-data.usa_names
 ```
 
 This will run a local http server on port `:8000`
@@ -59,7 +59,7 @@ pane.
 You can also run `sl-bigquery-mcp` with `inspector` directly using stdio transport protocol:
 
 ```bash
-npx @modelcontextprotocol/inspector uv run sl-bigquery-mcp
+npx @modelcontextprotocol/inspector uv run sl-bigquery-mcp --dataset bigquery-public-data.usa_names
 ```
 
 This method launches inspector and configures it to use sl-bigquery-mcp with the `stdio` transport protocol instead of 
