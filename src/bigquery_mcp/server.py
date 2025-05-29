@@ -28,7 +28,6 @@ class Context:
 @asynccontextmanager
 async def app_lifespan(server: FastMCP) -> AsyncIterator[Context]:
     """Manage application lifecycle with type-safe context"""
-    # Initialize on startup
     config = ConfigWrapper.config
     with config.get_client() as client:
         yield Context(config=config, client=client)
