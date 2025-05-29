@@ -3,8 +3,6 @@ This project is an mcp server for google's bigquery database
 
 ## Development Environment
 
-This project uses Homebrew as a package manager. While not strictly required, this README assumes its usage.
-
 ### Prerequisites
 
 This project uses uv to manage venv, gcloud cli for auth, and node to launch a mcp explorer `inspector` using npx.
@@ -39,9 +37,11 @@ Start the server in streamable HTTP mode:
 sl-bigquery-mcp --mode streamable-http
 ```
 
+This will run a local http server on port `:8000`
+
 ### Try it out!
 
-Launch the MCP Inspector GUI to interact with the server:
+In a new terminal window, launch the MCP Inspector GUI to interact with the server:
 
 ```bash
 npx @modelcontextprotocol/inspector
