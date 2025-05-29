@@ -62,4 +62,8 @@ You can also run `sl-bigquery-mcp` with `inspector` directly using stdio transpo
 npx @modelcontextprotocol/inspector uv run sl-bigquery-mcp
 ```
 
-This method uses the `stdio` transport protocol instead of `streamable-http`.
+This method launches inspector and configures it to use sl-bigquery-mcp with the `stdio` transport protocol instead of 
+`streamable-http`. That means the inspector app manages the running process and communicates over sdin and sdout rather than 
+http requests.
+
+It is a bit simpler to run but more challenging to debug. Use as needed.
