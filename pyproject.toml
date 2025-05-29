@@ -1,5 +1,5 @@
 [project]
-name = "bigquery-mcp"
+name = "sl-bigquery-mcp"
 version = "0.1.0"
 description = "A Model Context Protocol (MCP) server that provides access to BigQuery."
 readme = "README.md"
@@ -23,4 +23,4 @@ where = ["src"]
 package = true
 
 [project.scripts]
-bigquery-mcp = "bigquery_mcp.main:main"
+sl-bigquery-mcp = "bigquery_mcp.main:main"

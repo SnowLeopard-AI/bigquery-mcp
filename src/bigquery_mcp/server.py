@@ -1,10 +1,14 @@
 from __future__ import annotations
+
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 from dataclasses import dataclass
+from functools import partial
 
 from google.cloud.bigquery import Client
+from google.cloud.bigquery.table import TableListItem, RowIterator
 from mcp.server.fastmcp import FastMCP
+from pydantic import Field
 
 from bigquery_mcp.config import ConfigWrapper, Config
 
@@ -15,8 +19,8 @@ class Context:
     config: Config
 
     @staticmethod
-    def get() -> Context:
-        ctx = app.get_context()
+    def get(app_) -> Context:
+        ctx = app_.get_context()
         context: Context = ctx.request_context.lifespan_context
         return context
 
@@ -26,25 +30,57 @@ async def app_lifespan(server: FastMCP) -> AsyncIterator[Context]:
     """Manage application lifecycle with type-safe context"""
     # Initialize on startup
     config = ConfigWrapper.config
-    kwargs = {}
-    if config.project:
-        kwargs['project'] = Config.project
-    try:
-        yield Context(config=config, client=Client(**kwargs))
-    finally:
-        # Cleanup on shutdown
-        pass
+    with config.get_client() as client:
+        yield Context(config=config, client=client)
 
 
-# Pass lifespan to server
+def make_app(app: FastMCP, config: Config):
+    @app.tool()
+    def query(
+        sql: str = Field(description="BigQuery sql statement to execute"),
+    ) -> dict:
+        """Executes the provided BigQuery sql statement and returns the results"""
+        context: Context = Context.get(app)
+        client = context.client
+        executed_query = client.query(sql, api_method=context.config.api_method)
+        results: RowIterator = executed_query.result()
+        rows = [list(r.values()) for r in results]
+        return {
+            "fields": [f.to_api_repr() for f in results.schema],
+            "num_rows": len(rows),
+            "rows": rows,
+        }
 
-app = FastMCP("BigQuery MCP Server", lifespan=app_lifespan)
+    with config.get_client() as client:
+        tables: list[TableListItem] = [
+            table
+            for dataset in config.datasets
+            for table in client.list_tables(dataset)
+        ]
+
+    for table in tables:
+        table_ref = str(table.reference)
+        app.resource(
+            f"schemas://{table_ref}",
+            name=f"Table Schema: {table_ref}",
+            mime_type="application/json",
+        )(partial(get_schema, table, app))
 
 
-# Access type-safe lifespan context in tools
-@app.tool()
-async def query_db() -> str:
-    """Tool that uses initialized resources"""
-    context: Context = Context.get()
-    db = context.config
-    return "foo"
+def get_schema(table_summary: TableListItem, app: FastMCP) -> dict:
+    context: Context = Context.get(app)
+    client = context.client
+    table = client.get_table(table_summary)
+    table_dict = table.to_api_repr()
+    desired_fields = [
+        "tableReference",
+        "description",
+        "schema",
+        "numBytes",
+        "numRows",
+        "creationTime",
+        "lastModifiedTime",
+        "resourceTags",
+        "labels",
+    ]
+    return {field: table_dict[field] for field in desired_fields if field in table_dict}

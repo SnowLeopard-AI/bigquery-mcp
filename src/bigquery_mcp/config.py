@@ -1,15 +1,24 @@
 from __future__ import annotations
 
-import os
-from dataclasses import dataclass, field
+from dataclasses import dataclass
 from typing import List, Optional
+
+from google.cloud import bigquery
+from google.cloud.bigquery.enums import QueryApiMethod
 
 
 @dataclass
 class Config:
-    dataset: List[str] = field(default_factory=list)
-    project: Optional[str] = os.environ.get('BQ_PROJECT')
+    datasets: List[str]
+    project: Optional[str]
+    api_method: QueryApiMethod
+
+    def get_client(self) -> bigquery.Client:
+        kwargs = {}
+        if self.project:
+            kwargs["project"] = Config.project
+        return bigquery.Client(**kwargs)
 
 
 class ConfigWrapper:
-    config: Config = Config()
+    config: Optional[Config] = None
