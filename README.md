@@ -7,18 +7,20 @@ This project uses Homebrew as a package manager. While not strictly required, th
 
 ### Prerequisites
 
-Install uv, create your venv, and activate your venv.
+This project uses uv to manage venv and node to launch a mcp explorer `inspector` using npx.
 
 ```bash
 brew install uv
-uv sync
-source .venv/bin/activate
+brew install node
 ```
 
-Install Node to use `npx` to run inspector, a gui mcp server explorer.
+### Clone Repo and Setup venv
 
 ```bash
-brew install node
+git clone https://github.com/SnowLeopard-AI/bigquery-mcp.git
+cd bigquery-mcp
+uv sync
+source .venv/bin/activate
 ```
 
 ### Running the BigQuery MCP Server
