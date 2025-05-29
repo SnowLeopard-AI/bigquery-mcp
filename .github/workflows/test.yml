@@ -8,7 +8,7 @@ on:
 
 jobs:
   pytest:
-    name: python
+    name: pytest
     runs-on: ubuntu-latest
 
     permissions:
