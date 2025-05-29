@@ -7,10 +7,11 @@ This project uses Homebrew as a package manager. While not strictly required, th
 
 ### Prerequisites
 
-This project uses uv to manage venv and node to launch a mcp explorer `inspector` using npx.
+This project uses uv to manage venv, gcloud cli for auth, and node to launch a mcp explorer `inspector` using npx.
 
 ```bash
 brew install uv
+brew install --cask google-cloud-sdk
 brew install node
 ```
 
@@ -22,6 +23,13 @@ cd bigquery-mcp
 uv sync
 source .venv/bin/activate
 ```
+
+### Authenticating with Google Cloud
+The mcp server requires google authentication.
+```bash
+gcloud auth login
+```
+this command will open your default browser and bring you to a Google login page.
 
 ### Running the BigQuery MCP Server
 
