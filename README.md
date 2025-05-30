@@ -1,6 +1,18 @@
 # Snow Leopard Bigquery MCP
 This project is a mcp server for Google's bigquery database
 
+## Quickstart
+
+To use the `sl-bigquery-mcp` server locally, clone this project and use `uv` to install it as a tool.
+
+```bash
+git clone https://github.com/SnowLeopard-AI/bigquery-mcp.git
+uv tool install -e bigquery-mcp
+sl-bigquery-mcp --help
+```
+
+You can now use the `sl-bigquery-mcp` cli to launch bigquery mcp server.
+
 ## Development Environment
 
 ### Prerequisites
