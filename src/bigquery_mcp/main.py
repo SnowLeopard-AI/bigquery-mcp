@@ -2,11 +2,11 @@ from enum import Enum
 from typing import List, Optional
 
 import typer
+from fastmcp import FastMCP
 from google.cloud.bigquery.enums import QueryApiMethod
-from mcp.server import FastMCP
 
 from bigquery_mcp.config import ConfigWrapper, Config
-from bigquery_mcp.server import make_app, app_lifespan
+from bigquery_mcp.server import make_app
 
 cli_app = typer.Typer(help="BigQuery MCP Server")
 
@@ -34,7 +34,7 @@ def typer_app(
     ConfigWrapper.config = Config(
         datasets=dataset, project=project, api_method=api_method
     )
-    app = FastMCP("BigQuery MCP Server", lifespan=app_lifespan, port=port)
+    app = FastMCP("BigQuery MCP Server", port=port)
     make_app(app, ConfigWrapper.config)
     app.run(transport=mode)
 
