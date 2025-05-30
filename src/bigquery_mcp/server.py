@@ -53,7 +53,7 @@ def make_app(app: FastMCP, config: Config):
 
 def get_schema(table_summary: TableListItem, app: FastMCP) -> dict:
     config = Config.get()
-    with config.get() as client:
+    with config.get_client() as client:
         table = client.get_table(table_summary)
         table_dict = table.to_api_repr()
         desired_fields = [
