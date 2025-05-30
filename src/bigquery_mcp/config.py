@@ -19,6 +19,10 @@ class Config:
             kwargs["project"] = Config.project
         return bigquery.Client(**kwargs)
 
+    @staticmethod
+    def get() -> Config:
+        return ConfigWrapper.config
+
 
 class ConfigWrapper:
     config: Optional[Config] = None
