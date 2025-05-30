@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from multiprocessing import Lock
 from typing import List, Optional
 
 from google.cloud import bigquery
@@ -12,12 +13,19 @@ class Config:
     datasets: List[str]
     project: Optional[str]
     api_method: QueryApiMethod
+    _client: bigquery.Client = None
+    _lock: Lock = Lock()
 
     def get_client(self) -> bigquery.Client:
-        kwargs = {}
-        if self.project:
-            kwargs["project"] = Config.project
-        return bigquery.Client(**kwargs)
+        if not self._client:
+            with self._lock:
+                if not self._client:
+                    kwargs = {}
+                    if self.project:
+                        kwargs["project"] = Config.project
+
+                    self._client = bigquery.Client(**kwargs)
+        return self._client
 
     @staticmethod
     def get() -> Config:
