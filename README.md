@@ -1,5 +1,5 @@
 # Snow Leopard Bigquery MCP
-This project is an mcp server for google's bigquery database
+This project is a mcp server for Google's bigquery database
 
 ## Development Environment
 
