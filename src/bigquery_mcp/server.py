@@ -36,22 +36,29 @@ def make_app(app: FastMCP, config: Config):
                 return dict(error=str(e))
 
     with config.get_client() as client:
-        tables: list[TableListItem] = [
+        tables: list[TableListItem | str] = [
             table
             for dataset in config.datasets
             for table in client.list_tables(dataset)
         ]
+    for table in config.tables:
+        if table.count(".") == 1:
+            tables.append(config.project + "." + table)
+        elif table.count(".") == 2:
+            tables.append(table)
+        else:
+            raise ValueError(f"Invalid table: {table}")
 
     for table in tables:
-        table_ref = str(table.reference)
+        table_ref = table if isinstance(table, str) else str(table.reference)
         app.resource(
             f"schemas://{table_ref}",
             name=f"Table Schema: {table_ref}",
             mime_type="application/json",
-        )(partial(get_schema, table, app))
+        )(partial(get_schema, table))
 
 
-def get_schema(table_summary: TableListItem, app: FastMCP) -> dict:
+def get_schema(table_summary: TableListItem | str) -> dict:
     config = Config.get()
     with config.get_client() as client:
         table = client.get_table(table_summary)

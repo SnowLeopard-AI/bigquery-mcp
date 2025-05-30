@@ -19,7 +19,8 @@ class MCPProtocol(str, Enum):
 
 def typer_app(
     mode: MCPProtocol = typer.Option(MCPProtocol.studio, help="MCP transport protocol"),
-    dataset: List[str] = typer.Option(default=[], help="Dataset(s) for mcp resources"),
+    dataset: List[str] = typer.Option(default=[], help="Dataset(s) for mcp resources. Will create resources for all tables."),
+    table: List[str] = typer.Option(default=[], help="Table(s) for mcp resources. Can be specified as project.dataset.table or dataset.table"),
     project: Optional[str] = typer.Option(
         None, help="BigQuery project", envvar="BQ_PROJECT"
     ),
@@ -32,7 +33,7 @@ def typer_app(
     BigQuery MCP Server
     """
     ConfigWrapper.config = Config(
-        datasets=dataset, project=project, api_method=api_method
+        datasets=dataset, project=project, api_method=api_method, tables=table
     )
     app = FastMCP("BigQuery MCP Server", port=port)
     make_app(app, ConfigWrapper.config)

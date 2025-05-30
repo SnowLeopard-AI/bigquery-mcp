@@ -11,6 +11,7 @@ from google.cloud.bigquery.enums import QueryApiMethod
 @dataclass
 class Config:
     datasets: List[str]
+    tables: List[str]
     project: Optional[str]
     api_method: QueryApiMethod
     _client: bigquery.Client = None
