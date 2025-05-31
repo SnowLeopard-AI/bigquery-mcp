@@ -1,4 +1,5 @@
 from enum import Enum
+from functools import wraps
 from typing import List, Optional
 
 import typer
@@ -17,7 +18,7 @@ class MCPProtocol(str, Enum):
     streamable_http = "streamable-http"
 
 
-def typer_app(
+def get_app(
     mode: MCPProtocol = typer.Option(MCPProtocol.studio, help="MCP transport protocol"),
     dataset: List[str] = typer.Option(
         default=[],
@@ -43,8 +44,13 @@ def typer_app(
     )
     app = FastMCP("BigQuery MCP Server", port=port)
     make_app(app, ConfigWrapper.config)
-    app.run(transport=mode)
+    return app
 
+
+@wraps(get_app)
+def typer_app(**kwargs):
+    app = get_app(**kwargs)
+    app.run(transport=kwargs['mode'])
 
 def main():
     typer.run(typer_app)

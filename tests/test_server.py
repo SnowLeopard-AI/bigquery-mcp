@@ -5,28 +5,30 @@ from fastmcp import FastMCP, Client
 from google.cloud.bigquery.enums import QueryApiMethod
 
 from bigquery_mcp.config import ConfigWrapper, Config
+from bigquery_mcp.main import get_app, MCPProtocol
 from bigquery_mcp.server import make_app
 
 
-@pytest.fixture(scope="module", autouse=True)
+@pytest.fixture()
 def config():
-    ConfigWrapper.config = Config(
-        datasets=["bigquery-public-data.usa_names"],
-        tables=[],
-        project=None,
-        api_method=QueryApiMethod.QUERY,
-    )
     return ConfigWrapper.config
 
 
 @pytest.fixture(scope="module")
-def app(config):
-    app_ = FastMCP("Test BigQuery MCP Server")
+def app():
+    app_ = get_app(
+        mode=MCPProtocol.studio,
+        dataset=["bigquery-public-data.usa_names"],
+        table=[],
+        project=None,
+        api_method=QueryApiMethod.QUERY,
+        port=8000
+    )
     make_app(app_, ConfigWrapper.config)
     return app_
 
 
-# noinspection SqlNoDataSourceInspection
+# noinspection SqlNoDataSourceInspection,SqlDialectInspection
 @pytest.fixture
 def public_query():
     return """
