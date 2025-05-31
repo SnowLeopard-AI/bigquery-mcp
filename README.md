@@ -1,7 +1,7 @@
 # Snow Leopard Bigquery MCP
 
 [![Test](https://github.com/SnowLeopard-AI/bigquery-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/SnowLeopard-AI/bigquery-mcp/actions/workflows/test.yml)
-![Coverage](https://raw.githubusercontent.com/SnowLeopard-AI/bigquery-mcp/653c0c10a6e73419e06a6d9c09fcf3edbf45c2fc/tests/coverage.svg?token=GHSAT0AAAAAADDWOWIA6ZNN4OR6HHLS5Z342B3LKSQ)
+![Coverage](tests/coverage.svg)
 
 This project is a mcp server for Google's bigquery database
 
