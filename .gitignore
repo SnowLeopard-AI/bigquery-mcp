@@ -7,6 +7,9 @@ wheels/
 *.egg-info
 .coverage*
 
+# GitHub
+gha-creds*
+
 # Virtual environments
 .venv
 
