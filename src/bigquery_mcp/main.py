@@ -50,7 +50,8 @@ def get_app(
 @wraps(get_app)
 def typer_app(**kwargs):
     app = get_app(**kwargs)
-    app.run(transport=kwargs['mode'])
+    app.run(transport=kwargs["mode"])
+
 
 def main():
     typer.run(typer_app)
