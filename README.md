@@ -1,4 +1,4 @@
-# Snow Leopard Bigquery MCP
+# Snow Leopard BigQuery MCP
 
 [![Test](https://github.com/SnowLeopard-AI/bigquery-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/SnowLeopard-AI/bigquery-mcp/actions/workflows/test.yml)
 ![Coverage](tests/coverage.svg)
