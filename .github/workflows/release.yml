@@ -34,7 +34,7 @@
 
         - name: Install dependencies and run tests
           run: |
-            uv sync --locked --all-extras --dev
+            uv sync --all-extras --dev
             uv run pytest  # Optional: run tests before building
 
         - name: Build package
