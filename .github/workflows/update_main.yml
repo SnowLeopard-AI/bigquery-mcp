@@ -1,27 +1,39 @@
-name: Test
+name: Keep Main Pretty
+# these are a series of jobs that auto-update main as needed
 
 on:
   push:
     branches: [main]
-  pull_request:
   workflow_dispatch:
+
+concurrency:
+  group: pretty-main
+  cancel-in-progress: true
 
 jobs:
   ruff:
     name: ruff
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/ruff-action@v3
+        with:
+          args: "--version"
+      - run: ruff check --fix
+      - run: ruff format
+      - uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Linter 🧹
 
 
-  pytest:
+  test-coverage:
     name: pytest
     runs-on: ubuntu-latest
-
     permissions:
-      contents: read
+      contents: write
       id-token: write
 
     steps:
@@ -43,3 +55,11 @@ jobs:
 
       - name: Run tests
         run: uv run pytest --cov=src/bigquery_mcp tests
+
+      - name: generate coverage badge
+        run: coverage-badge -o tests/coverage.svg -f
+
+      - name: commit changes and push
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: Update Test Coverage 📈

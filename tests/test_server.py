@@ -11,7 +11,10 @@ from bigquery_mcp.server import make_app
 @pytest.fixture(scope="module", autouse=True)
 def config():
     ConfigWrapper.config = Config(
-        datasets=["bigquery-public-data.usa_names"], tables=[], project=None, api_method=QueryApiMethod.QUERY
+        datasets=["bigquery-public-data.usa_names"],
+        tables=[],
+        project=None,
+        api_method=QueryApiMethod.QUERY,
     )
     return ConfigWrapper.config
 
@@ -45,6 +48,7 @@ async def test_list_resources(app):
     async with Client(app) as client:
         resources = len(await client.list_resources())
         assert resources == 2
+
 
 async def test_get_resources(app):
     async with Client(app) as client:

@@ -19,8 +19,14 @@ class MCPProtocol(str, Enum):
 
 def typer_app(
     mode: MCPProtocol = typer.Option(MCPProtocol.studio, help="MCP transport protocol"),
-    dataset: List[str] = typer.Option(default=[], help="Dataset(s) for mcp resources. Will create resources for all tables."),
-    table: List[str] = typer.Option(default=[], help="Table(s) for mcp resources. Can be specified as project.dataset.table or dataset.table"),
+    dataset: List[str] = typer.Option(
+        default=[],
+        help="Dataset(s) for mcp resources. Will create resources for all tables.",
+    ),
+    table: List[str] = typer.Option(
+        default=[],
+        help="Table(s) for mcp resources. Can be specified as project.dataset.table or dataset.table",
+    ),
     project: Optional[str] = typer.Option(
         None, help="BigQuery project", envvar="BQ_PROJECT"
     ),
