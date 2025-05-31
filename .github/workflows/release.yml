@@ -8,13 +8,21 @@
       runs-on: ubuntu-latest
       permissions:
         contents: write
+        id-token: write
 
       steps:
-        - name: Checkout code
-          uses: actions/checkout@v4
+        - uses: actions/checkout@v4
 
         - name: Install uv
           uses: astral-sh/setup-uv@v5
+          with:
+            enable-cache: true
+
+        - name: Authenticate to Google Cloud
+          uses: google-github-actions/auth@v2
+          with:
+            workload_identity_provider: 'projects/214217882291/locations/global/workloadIdentityPools/github-actions-pool-bigquery/providers/github-provider-sl'
+            service_account: 'bigquery-github-actions@luke-test-project-461115.iam.gserviceaccount.com'
 
         - name: Bump patch version
           id: version
