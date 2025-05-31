@@ -12,8 +12,9 @@ concurrency:
 
 jobs:
   ruff:
-    name: ruff
     runs-on: ubuntu-latest
+    concurrency:
+      group: updating-job
     permissions:
       contents: write
 
@@ -30,8 +31,9 @@ jobs:
 
 
   test-coverage:
-    name: pytest
     runs-on: ubuntu-latest
+    concurrency:
+      group: updating-job
     permissions:
       contents: write
       id-token: write

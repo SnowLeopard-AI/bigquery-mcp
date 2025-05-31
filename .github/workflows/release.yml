@@ -1,56 +1,58 @@
-  name: Build and Release Package
+name: Build and Release Package
 
-  on:
-    workflow_dispatch:
+on:
+  workflow_dispatch:
 
-  jobs:
-    build-and-release:
-      runs-on: ubuntu-latest
-      permissions:
-        contents: write
-        id-token: write
+jobs:
+  build-and-release:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: updating-job
+    permissions:
+      contents: write
+      id-token: write
 
-      steps:
-        - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v4
 
-        - name: Install uv
-          uses: astral-sh/setup-uv@v5
-          with:
-            enable-cache: true
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          enable-cache: true
 
-        - name: Authenticate to Google Cloud
-          uses: google-github-actions/auth@v2
-          with:
-            workload_identity_provider: 'projects/214217882291/locations/global/workloadIdentityPools/github-actions-pool-bigquery/providers/github-provider-sl'
-            service_account: 'bigquery-github-actions@luke-test-project-461115.iam.gserviceaccount.com'
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          workload_identity_provider: 'projects/214217882291/locations/global/workloadIdentityPools/github-actions-pool-bigquery/providers/github-provider-sl'
+          service_account: 'bigquery-github-actions@luke-test-project-461115.iam.gserviceaccount.com'
 
-        - name: Bump patch version
-          id: version
-          run: |
-            uv version --bump patch
-            NEW_VERSION=$(uv version | awk '{print $2}')
-            echo "New version: $NEW_VERSION"
-            echo "version=v$NEW_VERSION" >> $GITHUB_OUTPUT
+      - name: Bump patch version
+        id: version
+        run: |
+          uv version --bump patch
+          NEW_VERSION=$(uv version | awk '{print $2}')
+          echo "New version: $NEW_VERSION"
+          echo "version=v$NEW_VERSION" >> $GITHUB_OUTPUT
 
-        - name: Install dependencies and run tests
-          run: |
-            uv sync --all-extras --dev
-            uv run pytest  # Optional: run tests before building
+      - name: Install dependencies and run tests
+        run: |
+          uv sync --all-extras --dev
+          uv run pytest  # Optional: run tests before building
 
-        - name: Build package
-          run: uv build
+      - name: Build package
+        run: uv build
 
-        - name: Commit version bump and create tag
-          uses: stefanzweifel/git-auto-commit-action@v5
-          with:
-            commit_message: "Bump version to ${{ steps.version.outputs.version }}"
-            file_pattern: "pyproject.toml"
-            tagging_message: ${{ steps.version.outputs.version }}
+      - name: Commit version bump and create tag
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Bump version to ${{ steps.version.outputs.version }}"
+          file_pattern: "pyproject.toml"
+          tagging_message: ${{ steps.version.outputs.version }}
 
-        - name: Create Release
-          uses: softprops/action-gh-release@v2
-          with:
-            tag_name: ${{ steps.version.outputs.version }}
-            name: Release ${{ steps.version.outputs.version }}
-            files: dist/*
-            generate_release_notes: true
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ steps.version.outputs.version }}
+          name: Release ${{ steps.version.outputs.version }}
+          files: dist/*
+          generate_release_notes: true
