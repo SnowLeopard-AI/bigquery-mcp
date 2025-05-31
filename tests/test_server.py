@@ -1,10 +1,10 @@
 import json
 
 import pytest
-from fastmcp import FastMCP, Client
+from fastmcp import Client
 from google.cloud.bigquery.enums import QueryApiMethod
 
-from bigquery_mcp.config import ConfigWrapper, Config
+from bigquery_mcp.config import ConfigWrapper
 from bigquery_mcp.main import get_app, MCPProtocol
 from bigquery_mcp.server import make_app
 
@@ -22,7 +22,7 @@ def app():
         table=[],
         project=None,
         api_method=QueryApiMethod.QUERY,
-        port=8000
+        port=8000,
     )
     make_app(app_, ConfigWrapper.config)
     return app_
