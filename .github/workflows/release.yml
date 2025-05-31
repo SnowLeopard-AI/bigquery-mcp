@@ -1,0 +1,47 @@
+  name: Build and Release Package
+
+  on:
+    workflow_dispatch:
+
+  jobs:
+    build-and-release:
+      runs-on: ubuntu-latest
+      permissions:
+        contents: write
+
+      steps:
+        - name: Checkout code
+          uses: actions/checkout@v4
+
+        - name: Install uv
+          uses: astral-sh/setup-uv@v5
+
+        - name: Bump patch version
+          id: version
+          run: |
+            uv version --bump patch
+            NEW_VERSION=$(uv version)
+            echo "New version: $NEW_VERSION"
+            echo "version=v$NEW_VERSION" >> $GITHUB_OUTPUT
+
+        - name: Install dependencies and run tests
+          run: |
+            uv sync --locked --all-extras --dev
+            uv run pytest  # Optional: run tests before building
+
+        - name: Build package
+          run: uv build
+
+        - name: Commit version bump and create tag
+          uses: stefanzweifel/git-auto-commit-action@v5
+          with:
+            commit_message: "Bump version to ${{ steps.version.outputs.version }}"
+            file_pattern: "pyproject.toml"
+            tagging_message: ${{ steps.version.outputs.version }}
+
+        - name: Create Release
+          uses: softprops/action-gh-release@v2
+          with:
+            name: Release ${{ steps.version.outputs.version }}
+            files: dist/*
+            generate_release_notes: true
