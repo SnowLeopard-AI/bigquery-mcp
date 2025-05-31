@@ -45,7 +45,7 @@ jobs:
           service_account: 'bigquery-github-actions@luke-test-project-461115.iam.gserviceaccount.com'
 
       - name: Install project and check uv.lock file is up to date (`uv lock` to fix)
-        run: uv sync --frozen --locked --all-extras --dev
+        run: uv sync --frozen --all-extras --dev
 
       - name: Run tests
         run: uv run pytest --cov=src/bigquery_mcp tests
