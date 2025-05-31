@@ -3,10 +3,10 @@ import json
 import pytest
 from fastmcp import Client
 from google.cloud.bigquery.enums import QueryApiMethod
+from typer.testing import CliRunner
 
 from bigquery_mcp.config import ConfigWrapper
-from bigquery_mcp.main import get_app, MCPProtocol
-from bigquery_mcp.server import make_app
+from bigquery_mcp.main import mcp_app, MCPProtocol, cli_app
 
 
 @pytest.fixture()
@@ -16,7 +16,7 @@ def config():
 
 @pytest.fixture(scope="module")
 def app():
-    app_ = get_app(
+    return mcp_app(
         mode=MCPProtocol.studio,
         dataset=["bigquery-public-data.usa_names"],
         table=[],
@@ -24,8 +24,6 @@ def app():
         api_method=QueryApiMethod.QUERY,
         port=8000,
     )
-    make_app(app_, ConfigWrapper.config)
-    return app_
 
 
 # noinspection SqlNoDataSourceInspection,SqlDialectInspection
@@ -44,6 +42,15 @@ def public_query():
                LIMIT
                2;
            """
+
+
+async def test_cli(app):
+    runner = CliRunner()
+    result = runner.invoke(cli_app, ["--help"])
+
+    assert result.exit_code == 0
+    assert "Usage:" in result.stdout
+    assert "mode" in result.stdout
 
 
 async def test_list_resources(app):

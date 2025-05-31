@@ -18,7 +18,7 @@ class MCPProtocol(str, Enum):
     streamable_http = "streamable-http"
 
 
-def get_app(
+def mcp_app(
     mode: MCPProtocol = typer.Option(MCPProtocol.studio, help="MCP transport protocol"),
     dataset: List[str] = typer.Option(
         default=[],
@@ -35,10 +35,7 @@ def get_app(
         QueryApiMethod.QUERY, help="BigQuery client api_method"
     ),
     port: int = typer.Option(8000),
-):
-    """
-    BigQuery MCP Server
-    """
+) -> FastMCP:
     ConfigWrapper.config = Config(
         datasets=dataset, project=project, api_method=api_method, tables=table
     )
@@ -47,14 +44,15 @@ def get_app(
     return app
 
 
-@wraps(get_app)
-def typer_app(**kwargs):
-    app = get_app(**kwargs)
+@cli_app.command()
+@wraps(mcp_app)
+def wrapper(**kwargs):
+    app = mcp_app(**kwargs)
     app.run(transport=kwargs["mode"])
 
 
 def main():
-    typer.run(typer_app)
+    cli_app()
 
 
 if __name__ == "__main__":
