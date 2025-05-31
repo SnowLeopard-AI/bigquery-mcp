@@ -3,7 +3,7 @@ name = "sl-bigquery-mcp"
 version = "0.1.2"
 description = "A Model Context Protocol (MCP) server that provides access to BigQuery."
 readme = "README.md"
-requires-python = ">=3.13"
+requires-python = ">=3.9"
 dependencies = [
     "fastmcp>=2.5.2",
     "google-cloud-bigquery>=3.33.0",
