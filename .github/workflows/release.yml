@@ -28,7 +28,7 @@
           id: version
           run: |
             uv version --bump patch
-            NEW_VERSION=$(uv version)
+            NEW_VERSION=$(uv version | awk '{print $2}')
             echo "New version: $NEW_VERSION"
             echo "version=v$NEW_VERSION" >> $GITHUB_OUTPUT
 
