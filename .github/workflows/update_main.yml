@@ -59,6 +59,9 @@ jobs:
       - name: generate coverage badge
         run: uv run coverage-badge -o tests/coverage.svg -f
 
+      - name: generate coverage report
+        run: uv run coverage report > tests/coverage.txt
+
       - name: commit changes and push
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
