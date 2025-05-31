@@ -11,7 +11,7 @@ from bigquery_mcp.server import make_app
 @pytest.fixture(scope="module", autouse=True)
 def config():
     ConfigWrapper.config = Config(
-        datasets=["bigquery-public-data.usa_names"], project=None, api_method=QueryApiMethod.QUERY
+        datasets=["bigquery-public-data.usa_names"], tables=[], project=None, api_method=QueryApiMethod.QUERY
     )
     return ConfigWrapper.config
 
