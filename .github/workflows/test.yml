@@ -17,8 +17,13 @@ jobs:
 
 
   pytest:
-    name: pytest
+    name: pytest (Python ${{ matrix.python-version }})
     runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        python-version: ["3.10", "3.11", "3.12", "3.13"]
+      fail-fast: false
 
     permissions:
       contents: read
@@ -31,6 +36,7 @@ jobs:
         uses: astral-sh/setup-uv@v5
         with:
           enable-cache: true
+          python-version: ${{ matrix.python-version }}
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
@@ -38,8 +44,8 @@ jobs:
           workload_identity_provider: 'projects/214217882291/locations/global/workloadIdentityPools/github-actions-pool-bigquery/providers/github-provider-sl'
           service_account: 'bigquery-github-actions@luke-test-project-461115.iam.gserviceaccount.com'
 
-      - name: Install the project
-        run: uv sync --locked --all-extras --dev
+      - name: Install project and check uv.lock file is up to date (`uv lock` to fix)
+        run: uv sync --frozen --all-extras --dev
 
       - name: Run tests
         run: uv run pytest --cov=src/bigquery_mcp tests
