@@ -35,45 +35,43 @@ def make_app(app: FastMCP, config: Config):
                 logger.exception("Error executing query")
                 return dict(error=str(e))
 
-    with config.get_client() as client:
-        tables: list[TableListItem | str] = [
-            table
-            for dataset in config.datasets
-            for table in client.list_tables(dataset)
-        ]
-    for table in config.tables:
-        if table.count(".") == 1:
-            tables.append(config.project + "." + table)
-        elif table.count(".") == 2:
-            tables.append(table)
-        else:
-            raise ValueError(f"Invalid table: {table}")
+    @app.resource("bigquery://tables")
+    def list_tables():
+        with config.get_client() as client:
+            tables: list[str] = [
+                str(table.reference)
+                for dataset in config.datasets
+                for table in client.list_tables(dataset)
+            ]
+        for table in config.tables:
+            if table.count(".") == 1:
+                tables.append(config.project + "." + table if config.project else table)
+            elif table.count(".") == 2:
+                tables.append(table)
+            else:
+                logger.warning(f"Invalid table: {table}")
+        return tables
 
-    for table in tables:
-        table_ref = table if isinstance(table, str) else str(table.reference)
-        app.resource(
-            f"schemas://{table_ref}",
-            name=f"Table Schema: {table_ref}",
-            mime_type="application/json",
-        )(partial(get_schema, table))
-
-
-def get_schema(table_summary: TableListItem | str) -> dict:
-    config = Config.get()
-    with config.get_client() as client:
-        table = client.get_table(table_summary)
-        table_dict = table.to_api_repr()
-        desired_fields = [
-            "tableReference",
-            "description",
-            "schema",
-            "numBytes",
-            "numRows",
-            "creationTime",
-            "lastModifiedTime",
-            "resourceTags",
-            "labels",
-        ]
-        return {
-            field: table_dict[field] for field in desired_fields if field in table_dict
-        }
+    @app.resource("bigquery://tables/{table}/schema",
+                  name=f"Table Schema",
+                  mime_type="application/json")
+    @app.tool("get_schema", "Get the schema for a given table")
+    def get_schema(table: str) -> dict:
+        config = Config.get()
+        with config.get_client() as client:
+            table = client.get_table(table)
+            table_dict = table.to_api_repr()
+            desired_fields = [
+                "tableReference",
+                "description",
+                "schema",
+                "numBytes",
+                "numRows",
+                "creationTime",
+                "lastModifiedTime",
+                "resourceTags",
+                "labels",
+            ]
+            return {
+                field: table_dict[field] for field in desired_fields if field in table_dict
+            }
