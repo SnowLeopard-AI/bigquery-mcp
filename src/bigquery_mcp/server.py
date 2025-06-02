@@ -1,11 +1,10 @@
 from __future__ import annotations
 
 import logging
-from functools import partial
 
 from fastmcp import FastMCP
 from google.api_core.exceptions import BadRequest
-from google.cloud.bigquery.table import TableListItem, RowIterator
+from google.cloud.bigquery.table import RowIterator
 from pydantic import Field
 
 from bigquery_mcp.config import Config
@@ -53,7 +52,7 @@ def make_app(app: FastMCP, config: Config):
         return tables
 
     @app.resource("bigquery://tables/{table}/schema",
-                  name=f"Table Schema",
+                  name="Table Schema",
                   mime_type="application/json")
     @app.tool("get_schema", "Get the schema for a given table")
     def get_schema(table: str) -> dict:
