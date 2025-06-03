@@ -5,13 +5,7 @@ from fastmcp import Client
 from google.cloud.bigquery.enums import QueryApiMethod
 from typer.testing import CliRunner
 
-from bigquery_mcp.config import ConfigWrapper
 from bigquery_mcp.main import mcp_app, MCPProtocol, cli_app
-
-
-@pytest.fixture()
-def config():
-    return ConfigWrapper.config
 
 
 @pytest.fixture(scope="module")

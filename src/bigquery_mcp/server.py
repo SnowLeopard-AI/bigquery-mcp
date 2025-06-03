@@ -13,12 +13,12 @@ logger = logging.getLogger(__name__)
 
 
 def make_app(app: FastMCP, config: Config):
-    @app.tool()
+    @app.tool(
+        description="Executes the provided BigQuery sql statement and returns the results"
+    )
     def query(
         sql: str = Field(description="BigQuery sql statement to execute"),
     ):
-        """Executes the provided BigQuery sql statement and returns the results"""
-        config = Config.get()
         with config.get_client() as client:
             try:
                 executed_query = client.query(sql, api_method=config.api_method)
@@ -56,9 +56,7 @@ def make_app(app: FastMCP, config: Config):
         name="Table Schema",
         mime_type="application/json",
     )
-    @app.tool("get_schema", "Get the schema for a given table")
     def get_schema(table: str) -> dict:
-        config = Config.get()
         with config.get_client() as client:
             table = client.get_table(table)
             table_dict = table.to_api_repr()
@@ -78,3 +76,8 @@ def make_app(app: FastMCP, config: Config):
                 for field in desired_fields
                 if field in table_dict
             }
+
+    if config.enable_list_tables_tool:
+        app.add_tool(list_tables, "list_tables", "List the tables available")
+    if config.enable_schema_tool:
+        app.add_tool(get_schema, "get_schema", "Get the schema for a given table")

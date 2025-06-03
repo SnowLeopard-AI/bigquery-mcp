@@ -6,7 +6,7 @@ import typer
 from fastmcp import FastMCP
 from google.cloud.bigquery.enums import QueryApiMethod
 
-from bigquery_mcp.config import ConfigWrapper, Config
+from bigquery_mcp.config import Config
 from bigquery_mcp.server import make_app
 
 cli_app = typer.Typer(help="BigQuery MCP Server")
@@ -30,6 +30,10 @@ def mcp_app(
         default=[],
         help="Table(s) for mcp resources. Can be specified as project.dataset.table or dataset.table",
     ),
+    enable_list_tables_tool: bool = typer.Option(
+        True, help="Registers list_resources tool"
+    ),
+    enable_schema_tool: bool = typer.Option(True, help="registers get_schema tool"),
     project: Optional[str] = typer.Option(
         None, help="BigQuery project", envvar="BQ_PROJECT"
     ),
@@ -38,11 +42,16 @@ def mcp_app(
     ),
     port: int = typer.Option(8000),
 ) -> FastMCP:
-    ConfigWrapper.config = Config(
-        datasets=dataset, project=project, api_method=api_method, tables=table
+    config = Config(
+        datasets=dataset,
+        project=project,
+        api_method=api_method,
+        tables=table,
+        enable_schema_tool=enable_schema_tool,
+        enable_list_tables_tool=enable_list_tables_tool,
     )
-    app = FastMCP("BigQuery MCP Server", port=port)
-    make_app(app, ConfigWrapper.config)
+    app = FastMCP("BigQuery MCP Server")
+    make_app(app, config)
     return app
 
 
@@ -50,7 +59,7 @@ def mcp_app(
 @wraps(mcp_app)
 def wrapper(**kwargs):
     app = mcp_app(**kwargs)
-    app.run(transport=kwargs["mode"])
+    app.run(transport=kwargs["mode"], port=kwargs["port"])
 
 
 def main():
