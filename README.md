@@ -166,6 +166,6 @@ We welcome contributions! Please:
 
 ## Support
 
-- **Issues**: [GitHub Issues](https://github.com/SnowLeopard-AI/bigquery-mcp/issues)
-- **Documentation**: [BigQuery Documentation](https://cloud.google.com/bigquery/docs)
-- **MCP Protocol**: [Model Context Protocol](https://modelcontextprotocol.io/)
+**Issues**: [GitHub Issues](https://github.com/SnowLeopard-AI/bigquery-mcp/issues)  
+**Documentation**: [BigQuery Documentation](https://cloud.google.com/bigquery/docs)  
+**MCP Protocol**: [Model Context Protocol](https://modelcontextprotocol.io/)  
