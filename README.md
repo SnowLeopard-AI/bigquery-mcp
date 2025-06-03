@@ -64,8 +64,10 @@ Edit your `claude_desktop_config.json` file to add the BigQuery MCP server:
 ### 3. Restart Claude Desktop
 After saving the configuration, restart Claude Desktop. You should now be able to ask Claude questions about your BigQuery data!
 
-#### Example Queries to Try:
-- "What are the top 10 most popular names in 2020?"
+#### Example Query
+```
+What are the top 10 most popular names in 2020?
+```
 
 ## Configuration Options
 
