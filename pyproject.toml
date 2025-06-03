@@ -11,8 +11,8 @@ dependencies = [
 ]
 
 [project.urls]
-Homepage = "https://github.com/steamship-core/sl-bigquery-mcp"
-GitHub = "https://github.com/steamship-core/sl-bigquery-mcp#readme"
+Homepage = "https://www.snowleopard.ai"
+GitHub = "https://github.com/SnowLeopard-AI/sl-bigquery-mcp#readme"
 
 [dependency-groups]
 dev = [
