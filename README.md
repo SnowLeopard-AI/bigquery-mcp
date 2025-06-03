@@ -12,7 +12,7 @@ This project was developed by Snow Leopard AI as a benchmarking tool for our pla
 
 The Model Context Protocol (MCP) is an open standard that allows AI applications to securely connect to external data sources and tools. This BigQuery MCP server acts as a bridge between AI agents and your BigQuery datasets.
 
-## MCP Features
+## Snow Leopard BigQuery MCP Server Features
 
 ### Resources
 | Resource URI                       | Description                            |
@@ -21,10 +21,11 @@ The Model Context Protocol (MCP) is an open standard that allows AI applications
 | `bigquery://tables/{table}/schema` | Get the schema of a specific table     |
 
 ### Tools
-| Tool                     | Description                             |
-|--------------------------|-----------------------------------------|
-| `get_schema(table: str)` | Get the schema of a given table         |
-| `query(sql: str)`        | Execute BigQuery SQL and return results |
+| Tool                                 | Description                             |
+|--------------------------------------|-----------------------------------------|
+| `list_tables(table: str)` (optional) | List available tables                   |
+| `get_schema(table: str)` (optional)  | Get the schema of a given table         |
+| `query(sql: str)`                    | Execute BigQuery SQL and return results |
 
 ## Quick Start: Claude Desktop
 ### Prerequisites
