@@ -31,9 +31,9 @@ def mcp_app(
         help="Table(s) for mcp resources. Can be specified as project.dataset.table or dataset.table",
     ),
     enable_list_tables_tool: bool = typer.Option(
-        True, help="Registers list_resources tool"
+        True, help="Register list_resources tool"
     ),
-    enable_schema_tool: bool = typer.Option(True, help="registers get_schema tool"),
+    enable_schema_tool: bool = typer.Option(True, help="Register get_schema tool"),
     project: Optional[str] = typer.Option(
         None, help="BigQuery project", envvar="BQ_PROJECT"
     ),
