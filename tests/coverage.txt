@@ -3,6 +3,6 @@ Name                           Stmts   Miss  Cover
 src/bigquery_mcp/__init__.py       0      0   100%
 src/bigquery_mcp/config.py        28      1    96%
 src/bigquery_mcp/main.py          27      4    85%
-src/bigquery_mcp/server.py        45      8    82%
+src/bigquery_mcp/server.py        46      8    83%
 --------------------------------------------------
-TOTAL                            100     13    87%
+TOTAL                            101     13    87%
