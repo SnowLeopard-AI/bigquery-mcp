@@ -29,7 +29,7 @@ def make_app(app: FastMCP, config: Config):
                 logger.warning(f"Bad request: {br}")
                 fields = ["reason", "message"]
                 errors = [{f: e[f] for f in fields if f in e} for e in br.errors]
-                return dict(error=errors[0] if len(errors) == 1 else dict(errors=errors))
+                return dict(error=errors[0] if len(errors) == 1 else dict(error=errors))
             except Exception as e:
                 logger.exception("Error executing query")
                 return dict(error=str(e))

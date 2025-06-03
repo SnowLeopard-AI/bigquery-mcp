@@ -94,12 +94,12 @@ async def test_can_get_schema(app, public_query):
 async def test_bad_query_errors(app):
     async with Client(app) as client:
         responses = await client.call_tool("query", dict(sql="foo"))
-        assert response_obj(responses) == dict(
+        assert response_obj(responses)['errors'] == dict(
             reason="invalidQuery",
             message='Syntax error: Unexpected identifier "foo" at [1:1]',
         )
 
 
-def response_obj(responses):
+def response_obj(responses) -> dict | list:
     rtn = [json.loads(r.text) for r in responses]
     return rtn[0] if len(rtn) == 1 else rtn
