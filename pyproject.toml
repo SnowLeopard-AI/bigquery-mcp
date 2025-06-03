@@ -12,7 +12,9 @@ dependencies = [
 
 [project.urls]
 Homepage = "https://www.snowleopard.ai"
-Repository = "https://github.com/SnowLeopard-AI/sl-bigquery-mcp#readme"
+Repository = "https://github.com/SnowLeopard-AI/bigquery-mcp?tab=readme-ov-file#readme"
+Issues = "https://github.com/SnowLeopard-AI/bigquery-mcp/issues"
+Changelog = "https://github.com/SnowLeopard-AI/bigquery-mcp/releases"
 
 [dependency-groups]
 dev = [
