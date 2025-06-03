@@ -26,7 +26,8 @@ The Model Context Protocol (MCP) is an open standard that allows AI applications
 | `get_schema(table: str)` | Get the schema of a given table         |
 | `query(sql: str)`        | Execute BigQuery SQL and return results |
 
-## Prerequisites
+## Quick Start: Claude Desktop
+### Prerequisites
 
 Before getting started, ensure you have:
 
@@ -34,8 +35,6 @@ Before getting started, ensure you have:
 - **Google Cloud Project** with BigQuery enabled: [Setup guide](https://cloud.google.com/bigquery/docs/quickstarts/query-public-dataset-console)
 - **Google Cloud CLI (gcloud)**: [Installation guide](https://cloud.google.com/sdk/docs/install)
 - **UV Package Manager**: [Installation guide](https://docs.astral.sh/uv/getting-started/installation/)
-
-## Quick Start: Claude Desktop
 
 ### 1. Authenticate with Google Cloud
 ```bash
