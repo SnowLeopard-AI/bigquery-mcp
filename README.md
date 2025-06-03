@@ -95,7 +95,7 @@ uvx sl-bigquery-mcp --help
 ```
 ```
 Usage: sl-bigquery-mcp [OPTIONS]                                                                                                                                                                                                  
-                                                                                                                                                                                                                                   
+
 ╭─ Options ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
 │ --mode                                                       [stdio|sse|streamable-http]  MCP transport protocol [default: stdio]                                                  │
 │ --dataset                                                    TEXT                         Dataset(s) for mcp resources. Will create resources for all tables.                      │
