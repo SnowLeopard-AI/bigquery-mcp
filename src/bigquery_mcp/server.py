@@ -51,9 +51,11 @@ def make_app(app: FastMCP, config: Config):
                 logger.warning(f"Invalid table: {table}")
         return tables
 
-    @app.resource("bigquery://tables/{table}/schema",
-                  name="Table Schema",
-                  mime_type="application/json")
+    @app.resource(
+        "bigquery://tables/{table}/schema",
+        name="Table Schema",
+        mime_type="application/json",
+    )
     @app.tool("get_schema", "Get the schema for a given table")
     def get_schema(table: str) -> dict:
         config = Config.get()
@@ -72,5 +74,7 @@ def make_app(app: FastMCP, config: Config):
                 "labels",
             ]
             return {
-                field: table_dict[field] for field in desired_fields if field in table_dict
+                field: table_dict[field]
+                for field in desired_fields
+                if field in table_dict
             }

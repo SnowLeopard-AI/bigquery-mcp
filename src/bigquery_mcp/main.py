@@ -19,7 +19,9 @@ class MCPProtocol(str, Enum):
 
 
 def mcp_app(
-    mode: MCPProtocol = typer.Option(MCPProtocol.studio, help="MCP transport protocol"),  # this is required for typer args
+    mode: MCPProtocol = typer.Option(
+        MCPProtocol.studio, help="MCP transport protocol"
+    ),  # this is required for typer args
     dataset: List[str] = typer.Option(
         default=[],
         help="Dataset(s) for mcp resources. Will create resources for all tables.",

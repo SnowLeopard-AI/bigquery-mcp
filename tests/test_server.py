@@ -67,7 +67,7 @@ async def test_get_resources(app):
         resource_parts = await client.read_resource(resources[0].uri)
         resp = response_obj(resource_parts)
         assert len(resp) == 2
-        assert 'bigquery-public-data.usa_names.usa_1910_current' in resp
+        assert "bigquery-public-data.usa_names.usa_1910_current" in resp
 
 
 async def test_mcp_server_has_query_tool(app):
@@ -86,7 +86,9 @@ async def test_can_query(app, public_query):
 
 async def test_can_get_schema(app, public_query):
     async with Client(app) as client:
-        responses = await client.call_tool("get_schema", dict(table="bigquery-public-data.usa_names.usa_1910_current"))
+        responses = await client.call_tool(
+            "get_schema", dict(table="bigquery-public-data.usa_names.usa_1910_current")
+        )
         schema = response_obj(responses)
         assert schema
 
@@ -94,7 +96,7 @@ async def test_can_get_schema(app, public_query):
 async def test_bad_query_errors(app):
     async with Client(app) as client:
         responses = await client.call_tool("query", dict(sql="foo"))
-        assert response_obj(responses)['error'] == dict(
+        assert response_obj(responses)["error"] == dict(
             reason="invalidQuery",
             message='Syntax error: Unexpected identifier "foo" at [1:1]',
         )
