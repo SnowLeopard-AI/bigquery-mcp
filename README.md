@@ -15,16 +15,16 @@ The Model Context Protocol (MCP) is an open standard that allows AI applications
 ## MCP Features
 
 ### Resources
-| Resource URI                       | Description                            | Example                           |
-|------------------------------------|----------------------------------------|-----------------------------------|
-| `bigquery://tables`                | List all tables available to the agent | Returns table inventory           |
-| `bigquery://tables/{table}/schema` | Get the schema of a specific table     | Column names, types, descriptions |
+| Resource URI                       | Description                            |
+|------------------------------------|----------------------------------------|
+| `bigquery://tables`                | List all tables available to the agent |
+| `bigquery://tables/{table}/schema` | Get the schema of a specific table     |
 
 ### Tools
-| Tool                     | Description                             | Usage                                       |
-|--------------------------|-----------------------------------------|---------------------------------------------|
-| `get_schema(table: str)` | Get the schema of a given table         | `get_schema("usa_names")`                   |
-| `query(sql: str)`        | Execute BigQuery SQL and return results | `query("SELECT * FROM usa_names LIMIT 10")` |
+| Tool                     | Description                             |
+|--------------------------|-----------------------------------------|
+| `get_schema(table: str)` | Get the schema of a given table         |
+| `query(sql: str)`        | Execute BigQuery SQL and return results |
 
 ## Prerequisites
 
