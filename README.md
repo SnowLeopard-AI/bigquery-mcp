@@ -10,7 +10,7 @@ This project was developed by Snow Leopard AI as a benchmarking tool for our pla
 
 ## What is MCP?
 
-The Model Context Protocol (MCP) is an open standard that allows AI applications to securely connect to external data sources and tools. This BigQuery MCP server acts as a bridge between AI agents and your BigQuery datasets.
+The [Model Context Protocol](https://en.wikipedia.org/wiki/Model_Context_Protocol) (MCP) is an open standard that allows AI applications to securely connect to external data sources and tools. This BigQuery MCP server acts as a bridge between AI agents and your BigQuery datasets.
 
 ## Snow Leopard BigQuery MCP Server Features
 
