@@ -59,7 +59,10 @@ def mcp_app(
 @wraps(mcp_app)
 def wrapper(**kwargs):
     app = mcp_app(**kwargs)
-    app.run(transport=kwargs["mode"], port=kwargs["port"])
+    run_args = dict(transport=kwargs["mode"])
+    if kwargs["mode"] != "stdio":
+        run_args["port"] = kwargs["port"]
+    app.run(**run_args)
 
 
 def main():
