@@ -14,6 +14,8 @@ class Config:
     tables: List[str]
     project: Optional[str]
     api_method: QueryApiMethod
+    enable_schema_tool: bool = True
+    enable_list_tables_tool: bool = True
     _client: bigquery.Client = None
     _lock: Lock = Lock()
 
@@ -27,11 +29,3 @@ class Config:
 
                     self._client = bigquery.Client(**kwargs)
         return self._client
-
-    @staticmethod
-    def get() -> Config:
-        return ConfigWrapper.config
-
-
-class ConfigWrapper:
-    config: Optional[Config] = None
