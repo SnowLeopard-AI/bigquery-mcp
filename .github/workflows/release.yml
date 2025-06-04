@@ -57,3 +57,6 @@ jobs:
           name: Release ${{ steps.version.outputs.version }}
           files: dist/*
           generate_release_notes: true
+
+      - name: Build package
+        run: uv publish
