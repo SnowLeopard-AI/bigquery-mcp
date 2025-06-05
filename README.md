@@ -3,6 +3,8 @@
 [![Test](https://github.com/SnowLeopard-AI/bigquery-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/SnowLeopard-AI/bigquery-mcp/actions/workflows/test.yml)
 [![Coverage](https://raw.githubusercontent.com/SnowLeopard-AI/bigquery-mcp/refs/heads/main/tests/coverage.svg)](https://github.com/SnowLeopard-AI/bigquery-mcp/blob/main/tests/coverage.txt)
 [![PyPI - Version](https://img.shields.io/pypi/v/sl-bigquery-mcp)](https://pypi.org/project/sl-bigquery-mcp/)
+[![Discord](https://img.shields.io/discord/1379929746875617413?logo=discord&logoColor=white)](https://discord.gg/yYxYkzAv)
+
 
 A Model Context Protocol (MCP) server for Google BigQuery that enables AI agents to interact with BigQuery databases through natural language queries and schema exploration.
 
