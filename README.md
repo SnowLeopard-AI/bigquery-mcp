@@ -157,7 +157,7 @@ npx @modelcontextprotocol/inspector uv run sl-bigquery-mcp --dataset bigquery-pu
 
 We welcome contributions! Please:
 
-1. Join our Discord! Communicating before coding always saves time.
+1. [Join our Discord](https://discord.gg/yYxYkzAv)! Communicating before coding always saves time.
 2. Fork the repository
 2. Create a feature branch
 3. Add tests for new functionality
