@@ -39,11 +39,19 @@ Before getting started, ensure you have:
 - **Google Cloud CLI (gcloud)**: [Installation guide](https://cloud.google.com/sdk/docs/install)
 - **UV Package Manager**: [Installation guide](https://docs.astral.sh/uv/getting-started/installation/)
 
-### 1. Authenticate with Google Cloud
+### 1. Setup Google Cloud
+First we need to set our gcloud default project. If you do not have a project that you can run bigquery jobs on, create 
+one by folllowing Google's [BigQuery Quickstart Guide](https://cloud.google.com/bigquery/docs/quickstarts/query-public-dataset-console).
 ```bash
+gcloud config set project <projectName>
 gcloud auth application-default login
 ```
 This opens your browser to authenticate your local machine with Google Cloud, enabling BigQuery access.
+
+Run the following to make check that you have successfully authenticated:
+```bash
+TOKEN=$(gcloud auth application-default print-access-token) && [ -n "$TOKEN" ] && curl -s -w "\n%{http_code}" -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" -d "{\"query\": \"SELECT 1 as test\", \"useLegacySql\": false}" "https://bigquery.googleapis.com/bigquery/v2/projects/$(gcloud config get-value project)/queries" | tail -n1 | grep -q "^200$" && echo "✅ BigQuery setup working" || echo "❌ Error with BigQuery setup"
+```
 
 ### 2. Configure Claude Desktop
 Edit your `claude_desktop_config.json` file to add the BigQuery MCP server:
