@@ -40,22 +40,22 @@ Before getting started, ensure you have:
 - **UV Package Manager**: [Installation guide](https://docs.astral.sh/uv/getting-started/installation/)
 
 ### 1. Setup Google Cloud
-First, we need to set our gcloud default project. If you do not have a project that you can run bigquery jobs on, create 
-one by following Google's [BigQuery Quickstart Guide](https://cloud.google.com/bigquery/docs/quickstarts/query-public-dataset-console#query_a_public_dataset) 
-Create a project and follow the instructions to **Query a public dataset**.
+First, we need to authenticate with Google.
 ```bash
-gcloud config set project <projectName>
 gcloud auth application-default login
 ```
-This opens your browser to authenticate your local machine with Google Cloud, enabling BigQuery access.
-
-Run the following to make check that you have successfully authenticated:
-```bash
-TOKEN=$(gcloud auth application-default print-access-token) && [ -n "$TOKEN" ] && curl -s -w "\n%{http_code}" -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" -d "{\"query\": \"SELECT 1 as test\", \"useLegacySql\": false}" "https://bigquery.googleapis.com/bigquery/v2/projects/$(gcloud config get-value project)/queries" | tail -n1 | grep -q "^200$" && echo "✅ BigQuery setup working" || echo "❌ Error with BigQuery setup"
-```
+This opens your browser to authenticate your local machine with Google Cloud.
 
 ### 2. Configure Claude Desktop
-Edit your `claude_desktop_config.json` file to add the BigQuery MCP server:
+Edit your `claude_desktop_config.json` file to add the BigQuery MCP server. On mac this will be available at 
+`~/Library/Application\ Support/Claude/claude_desktop_config.json`, or from the Claude Desktop app via `Claude` > 
+`Settings` > `Developer` > `Edit Config`
+
+You will need to set your project to a Google Cloud project with permissions to submit bigquery jobs. If you do not have
+a project that you can run bigquery jobs on, create and test one by following Google's 
+[BigQuery Quickstart Guide](https://cloud.google.com/bigquery/docs/quickstarts/query-public-dataset-console#query_a_public_dataset)
+Create a project and follow the instructions to **Query a public dataset**.
+
 
 ```json
 {
@@ -65,7 +65,9 @@ Edit your `claude_desktop_config.json` file to add the BigQuery MCP server:
       "args": [
         "sl-bigquery-mcp", 
         "--dataset",
-        "bigquery-public-data.usa_names"
+        "bigquery-public-data.usa_names",
+        "--project",
+        "🚨 <projectName> 🚨"
       ]
     }
   }
@@ -146,6 +148,8 @@ The following command will launch a browser for you to login to your google clou
 project with `BigQuery` enabled. If you don't, see Google's [bigquery setup guide](https://cloud.google.com/bigquery/docs/quickstarts/query-public-dataset-console).
 ```bash
 gcloud auth application-default login
+gcloud config set project <projectName>
+gcloud auth application-default set-quota-project <projectName>
 ```
 
 ### Running Tests

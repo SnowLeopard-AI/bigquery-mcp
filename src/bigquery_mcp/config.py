@@ -25,7 +25,7 @@ class Config:
                 if not self._client:
                     kwargs = {}
                     if self.project:
-                        kwargs["project"] = Config.project
+                        kwargs["project"] = self.project
 
                     self._client = bigquery.Client(**kwargs)
         return self._client
