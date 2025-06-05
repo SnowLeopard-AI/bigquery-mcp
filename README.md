@@ -40,8 +40,9 @@ Before getting started, ensure you have:
 - **UV Package Manager**: [Installation guide](https://docs.astral.sh/uv/getting-started/installation/)
 
 ### 1. Setup Google Cloud
-First we need to set our gcloud default project. If you do not have a project that you can run bigquery jobs on, create 
-one by folllowing Google's [BigQuery Quickstart Guide](https://cloud.google.com/bigquery/docs/quickstarts/query-public-dataset-console).
+First, we need to set our gcloud default project. If you do not have a project that you can run bigquery jobs on, create 
+one by following Google's [BigQuery Quickstart Guide](https://cloud.google.com/bigquery/docs/quickstarts/query-public-dataset-console#query_a_public_dataset) 
+Create a project and follow the instructions to **Query a public dataset**.
 ```bash
 gcloud config set project <projectName>
 gcloud auth application-default login
