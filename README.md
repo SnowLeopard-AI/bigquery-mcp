@@ -120,9 +120,6 @@ Usage: sl-bigquery-mcp [OPTIONS]
 │ --project                    TEXT                         BigQuery project [env var: BQ_PROJECT] [default: None]                                      │
 │ --api-method                 [INSERT|QUERY]               BigQuery client api_method [default: QUERY]                                                 │
 │ --port                       INTEGER                      [default: 8000]                                                                             │
-│ --install-completion                                      Install completion for the current shell.                                                   │
-│ --show-completion                                         Show completion for the current shell, to copy it or customize the installation.            │
-│ --help                                                    Show this message and exit.                                                                 │
 ╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
 
