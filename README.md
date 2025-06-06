@@ -170,17 +170,14 @@ npx @modelcontextprotocol/inspector uv run sl-bigquery-mcp --dataset bigquery-pu
 
 ## Contributing
 
-We welcome contributions! Please:
+We welcome contributions! Please coordinate with us on [discord](https://discord.gg/yYxYkzAv) to ensure your changes can quicly make it into the repo. 
+Communicating before coding always saves time.
 
-1. [Join our Discord](https://discord.gg/yYxYkzAv)! Communicating before coding always saves time.
-2. Fork the repository
-2. Create a feature branch
-3. Add tests for new functionality
-4. Ensure all tests pass
-5. Submit a pull request
+For logistics of contributing to an open source project, see the [first contributions repository](https://github.com/firstcontributions/first-contributions).
 
 ## Support
 
 **Issues**: [GitHub Issues](https://github.com/SnowLeopard-AI/bigquery-mcp/issues)  
 **Documentation**: [BigQuery Documentation](https://cloud.google.com/bigquery/docs)  
 **MCP Protocol**: [Model Context Protocol](https://modelcontextprotocol.io/)  
+**Contact**: [Discord Server](https://discord.gg/yYxYkzAv) 
