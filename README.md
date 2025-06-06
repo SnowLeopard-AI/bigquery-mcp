@@ -116,7 +116,14 @@ First, check out your Claude Desktop app logs (in the same directory as the conf
 
 #### On Startup
 This usually means Claude is having issues starting the mcp server. Frequently this is due to uvx being inaccessible from 
-the application. Try entering the full path to your executable (`which uvx`) to see if that helps. Otherwise, this may be 
+the application. In this case, use the full path to your uvx executable instead of just `uvx` in `claude_desktop_config.json`.
+
+To find your uv executable, run
+```bash
+which uvx
+```
+
+Otherwise, this may be 
 caused by bad arguments, dependency version incompatibilities, or bugs. If you run into the last two, please file an 
 [issue](https://github.com/SnowLeopard-AI/bigquery-mcp/issues) describing the problem.
 
