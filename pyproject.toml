@@ -1,13 +1,13 @@
 [project]
 name = "sl-bigquery-mcp"
-version = "0.1.4"
+version = "0.1.6"
 description = "A Model Context Protocol (MCP) server that provides access to BigQuery."
 readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 license-files = ["LICENSE"]
 dependencies = [
-    "fastmcp>=2.5.2",
+    "fastmcp==2.5.2",
     "google-cloud-bigquery>=3.33.0",
     "typer>=0.16.0",
 ]

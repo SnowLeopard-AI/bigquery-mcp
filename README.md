@@ -39,14 +39,24 @@ Before getting started, ensure you have:
 - **Google Cloud CLI (gcloud)**: [Installation guide](https://cloud.google.com/sdk/docs/install)
 - **UV Package Manager**: [Installation guide](https://docs.astral.sh/uv/getting-started/installation/)
 
-### 1. Authenticate with Google Cloud
+### 1. Setup Google Cloud
+First, we need to authenticate with Google.
 ```bash
 gcloud auth application-default login
 ```
-This opens your browser to authenticate your local machine with Google Cloud, enabling BigQuery access.
+This opens your browser to authenticate your local machine with Google Cloud.
 
 ### 2. Configure Claude Desktop
-Edit your `claude_desktop_config.json` file to add the BigQuery MCP server:
+Edit your `claude_desktop_config.json` file to add the BigQuery MCP server.
+
+**Application**: Claude > Settings > Developer > Edit Config  
+**Mac**: `~/Library/Application\ Support/Claude/claude_desktop_config.json`  
+**Windows**: `%APPDATA%\\Claude\\claude_desktop_config.json`  
+
+You will need to set your project to a Google Cloud project with permissions to submit bigquery jobs. If you do not have
+a project that you can run bigquery jobs on, create and test one by following Google's 
+[BigQuery Quickstart Guide](https://cloud.google.com/bigquery/docs/quickstarts/query-public-dataset-console#query_a_public_dataset)
+Create a project and follow the instructions to **query a public dataset**.
 
 ```json
 {
@@ -56,14 +66,23 @@ Edit your `claude_desktop_config.json` file to add the BigQuery MCP server:
       "args": [
         "sl-bigquery-mcp", 
         "--dataset",
-        "bigquery-public-data.usa_names"
+        "bigquery-public-data.usa_names",
+        "--project",
+        "🚨 <projectName> 🚨"
       ]
     }
   }
 }
 ```
 
-### 3. Restart Claude Desktop
+### 3. Close Claude Desktop and Launch it from the terminal
+Depending on how you have installed uv, the uvx executable may not be in Claude Desktop's PATH if it is launched from 
+the GUI. To be sure uvx is accessible from Claude Desktop, let's run it in the terminal. 
+
+```bash
+open -a claude
+```
+
 After saving the configuration, restart Claude Desktop. You should now be able to ask Claude questions about your BigQuery data!
 
 #### Example Query
@@ -72,27 +91,6 @@ What are the top 10 most popular names in 2020?
 ```
 
 ## Configuration Options
-
-### Dataset Configuration
-You can specify multiple datasets or specific tables:
-
-```json
-{
-  "mcpServers": {
-    "bigquery": {
-      "command": "uvx",
-      "args": [
-        "sl-bigquery-mcp",
-        "--dataset", "bigquery-public-data.usa_names",
-        "--dataset", "my-project.my-dataset",
-        "--table", "my-project.my-dataset.specific-table"
-      ]
-    }
-  }
-}
-```
-
-### Available Parameters
 To see a complete list of parameters:
 ```bash
 uvx sl-bigquery-mcp --help
@@ -100,20 +98,40 @@ uvx sl-bigquery-mcp --help
 ```
 Usage: sl-bigquery-mcp [OPTIONS]
 
-╭─ Options ──────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
-│ --mode                                                       [stdio|sse|streamable-http]  MCP transport protocol [default: stdio]                                                  │
-│ --dataset                                                    TEXT                         Dataset(s) for mcp resources. Will create resources for all tables.                      │
-│ --table                                                      TEXT                         Table(s) for mcp resources. Can be specified as project.dataset.table or dataset.table   │
-│ --enable-list-tables-tool    --no-enable-list-tables-tool                                 Registers list_resources tool [default: enable-list-tables-tool]                         │
-│ --enable-schema-tool         --no-enable-schema-tool                                      registers get_schema tool [default: enable-schema-tool]                                  │
-│ --project                                                    TEXT                         BigQuery project [env var: BQ_PROJECT] [default: None]                                   │
-│ --api-method                                                 [INSERT|QUERY]               BigQuery client api_method [default: QUERY]                                              │
-│ --port                                                       INTEGER                      [default: 8000]                                                                          │
-│ --install-completion                                                                      Install completion for the current shell.                                                │
-│ --show-completion                                                                         Show completion for the current shell, to copy it or customize the installation.         │
-│ --help                                                                                    Show this message and exit.                                                              │
-╰────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
+╭─ Options ─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╮
+│ --mode                       [stdio|sse|streamable-http]  MCP transport protocol [default: stdio]                                                     │
+│ --dataset                    TEXT                         Dataset(s) for mcp resources. Will create resources for all tables.                         │
+│ --table                      TEXT                         Table(s) for mcp resources. Can be specified as project.dataset.table or dataset.table      │
+│ --enable-list-tables-tool    --no-enable-list-tables-tool Registers list_resources tool [default: enable-list-tables-tool]                            │
+│ --enable-schema-tool         --no-enable-schema-tool      Registers get_schema tool [default: enable-schema-tool]                                     │
+│ --project                    TEXT                         BigQuery project [env var: BQ_PROJECT] [default: None]                                      │
+│ --api-method                 [INSERT|QUERY]               BigQuery client api_method [default: QUERY]                                                 │
+│ --port                       INTEGER                      [default: 8000]                                                                             │
+╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
+
+## Troubleshooting / FAQ
+### An MCP Error has occurred
+First, check out your Claude Desktop app logs (in the same directory as the config file) for more verbose errors / logging 
+
+#### On Startup
+This usually means Claude is having issues starting the mcp server. Frequently this is due to uvx being inaccessible from 
+the application. In this case, use the full path to your uvx executable instead of just `uvx` in `claude_desktop_config.json`.
+
+To find your uv executable, run
+```bash
+which uvx
+```
+
+Otherwise, this may be 
+caused by bad arguments, dependency version incompatibilities, or bugs. If you run into the last two, please file an 
+[issue](https://github.com/SnowLeopard-AI/bigquery-mcp/issues) describing the problem.
+
+#### On Resource / Tool Usage
+This may be a misconfiguration mcp server, authentication issues, the llm getting too much data, or of course, product 
+bugs. After checking the logs, consider using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector) to 
+debug your issue. And of course, file any bugs you find on our [issue board](https://github.com/SnowLeopard-AI/bigquery-mcp/issues). 
+ 
 
 ## Local Development & Testing
 
@@ -137,6 +155,8 @@ The following command will launch a browser for you to login to your google clou
 project with `BigQuery` enabled. If you don't, see Google's [bigquery setup guide](https://cloud.google.com/bigquery/docs/quickstarts/query-public-dataset-console).
 ```bash
 gcloud auth application-default login
+gcloud config set project <projectName>
+gcloud auth application-default set-quota-project <projectName>
 ```
 
 ### Running Tests
@@ -149,7 +169,7 @@ _Note: the tests run actual BigQuery queries against public datasets and require
 
 ### Local MCP Inspector
 
-For hands-on testing and development, use the MCP Inspector:
+For hands-on testing and development, use the [MCP Inspector](https://github.com/modelcontextprotocol/inspector) tool:
  
 ```bash
 npx @modelcontextprotocol/inspector uv run sl-bigquery-mcp --dataset bigquery-public-data.usa_names
@@ -157,17 +177,14 @@ npx @modelcontextprotocol/inspector uv run sl-bigquery-mcp --dataset bigquery-pu
 
 ## Contributing
 
-We welcome contributions! Please:
+We welcome contributions! Please coordinate with us on [discord](https://discord.gg/yYxYkzAv) to ensure your changes can quicly make it into the repo. 
+Communicating before coding always saves time.
 
-1. [Join our Discord](https://discord.gg/yYxYkzAv)! Communicating before coding always saves time.
-2. Fork the repository
-2. Create a feature branch
-3. Add tests for new functionality
-4. Ensure all tests pass
-5. Submit a pull request
+For logistics of contributing to an open source project, see the [first contributions repository](https://github.com/firstcontributions/first-contributions).
 
 ## Support
 
 **Issues**: [GitHub Issues](https://github.com/SnowLeopard-AI/bigquery-mcp/issues)  
 **Documentation**: [BigQuery Documentation](https://cloud.google.com/bigquery/docs)  
 **MCP Protocol**: [Model Context Protocol](https://modelcontextprotocol.io/)  
+**Contact**: [Discord Server](https://discord.gg/yYxYkzAv) 
