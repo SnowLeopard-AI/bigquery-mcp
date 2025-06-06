@@ -8,24 +8,6 @@ from google.cloud.bigquery.table import RowIterator
 from pydantic import Field
 
 from bigquery_mcp.config import Config
-
-logger = logging.getLogger(__name__)
-
-
-def make_app(app: FastMCP, config: Config):
-    @app.tool(
-        description="Executes the provided BigQuery sql statement and returns the results"
-    )
-    def query(
-        sql: str = Field(description="BigQuery sql statement to execute"),
-    ):
-        with config.get_client() as client:
-            try:
-                executed_query = client.query(sql, api_method=config.api_method)
-                results: RowIterator = executed_query.result()
-                rows = [dict(r.items()) for r in results]
-                return rows
-            except BadRequest as br:
                 logger.warning(f"Bad request: {br}")
                 fields = ["reason", "message"]
                 errors = [{f: e[f] for f in fields if f in e} for e in br.errors]
