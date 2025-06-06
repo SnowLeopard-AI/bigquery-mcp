@@ -47,15 +47,16 @@ gcloud auth application-default login
 This opens your browser to authenticate your local machine with Google Cloud.
 
 ### 2. Configure Claude Desktop
-Edit your `claude_desktop_config.json` file to add the BigQuery MCP server. On mac this will be available at 
-`~/Library/Application\ Support/Claude/claude_desktop_config.json`, or from the Claude Desktop app via `Claude` > 
-`Settings` > `Developer` > `Edit Config`
+Edit your `claude_desktop_config.json` file to add the BigQuery MCP server.
+
+**Application**: Claude > Settings > Developer > Edit Config  
+**Mac**: `~/Library/Application\ Support/Claude/claude_desktop_config.json`  
+**Windows**: `%APPDATA%\\Claude\\claude_desktop_config.json`  
 
 You will need to set your project to a Google Cloud project with permissions to submit bigquery jobs. If you do not have
 a project that you can run bigquery jobs on, create and test one by following Google's 
 [BigQuery Quickstart Guide](https://cloud.google.com/bigquery/docs/quickstarts/query-public-dataset-console#query_a_public_dataset)
-Create a project and follow the instructions to **Query a public dataset**.
-
+Create a project and follow the instructions to **query a public dataset**.
 
 ```json
 {
@@ -74,7 +75,14 @@ Create a project and follow the instructions to **Query a public dataset**.
 }
 ```
 
-### 3. Restart Claude Desktop
+### 3. Close Claude Desktop and Launch it from the terminal
+Depending on how you have installed uv, the uvx executable may not be in Claude Desktop's PATH if it is launched from 
+the GUI. To be sure uvx is accessible from Claude Desktop, let's run it in the terminal. 
+
+```bash
+open -a claude
+```
+
 After saving the configuration, restart Claude Desktop. You should now be able to ask Claude questions about your BigQuery data!
 
 #### Example Query
@@ -83,27 +91,6 @@ What are the top 10 most popular names in 2020?
 ```
 
 ## Configuration Options
-
-### Dataset Configuration
-You can specify multiple datasets or specific tables:
-
-```json
-{
-  "mcpServers": {
-    "bigquery": {
-      "command": "uvx",
-      "args": [
-        "sl-bigquery-mcp",
-        "--dataset", "bigquery-public-data.usa_names",
-        "--dataset", "my-project.my-dataset",
-        "--table", "my-project.my-dataset.specific-table"
-      ]
-    }
-  }
-}
-```
-
-### Available Parameters
 To see a complete list of parameters:
 ```bash
 uvx sl-bigquery-mcp --help
@@ -122,6 +109,22 @@ Usage: sl-bigquery-mcp [OPTIONS]
 │ --port                       INTEGER                      [default: 8000]                                                                             │
 ╰───────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────╯
 ```
+
+## Troubleshooting / FAQ
+### An MCP Error has occurred
+First, check out your Claude Desktop app logs (in the same directory as the config file) for more verbose errors / logging 
+
+#### On Startup
+This usually means Claude is having issues starting the mcp server. Frequently this is due to uvx being inaccessible from 
+the application. Try entering the full path to your executable (`which uvx`) to see if that helps. Otherwise, this may be 
+caused by bad arguments, dependency version incompatibilities, or bugs. If you run into the last two, please file an 
+[issue](https://github.com/SnowLeopard-AI/bigquery-mcp/issues) describing the problem.
+
+#### On Resource / Tool Usage
+This may be a misconfiguration mcp server, authentication issues, the llm getting too much data, or of course, product 
+bugs. After checking the logs, consider using the [MCP Inspector](https://github.com/modelcontextprotocol/inspector) to 
+debug your issue. And of course, file any bugs you find on our [issue board](https://github.com/SnowLeopard-AI/bigquery-mcp/issues). 
+ 
 
 ## Local Development & Testing
 
@@ -159,7 +162,7 @@ _Note: the tests run actual BigQuery queries against public datasets and require
 
 ### Local MCP Inspector
 
-For hands-on testing and development, use the MCP Inspector:
+For hands-on testing and development, use the [MCP Inspector](https://github.com/modelcontextprotocol/inspector) tool:
  
 ```bash
 npx @modelcontextprotocol/inspector uv run sl-bigquery-mcp --dataset bigquery-public-data.usa_names
