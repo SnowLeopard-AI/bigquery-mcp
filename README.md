@@ -188,3 +188,4 @@ For logistics of contributing to an open source project, see the [first contribu
 **Documentation**: [BigQuery Documentation](https://cloud.google.com/bigquery/docs)  
 **MCP Protocol**: [Model Context Protocol](https://modelcontextprotocol.io/)  
 **Contact**: [Discord Server](https://discord.gg/yYxYkzAv) 
+
