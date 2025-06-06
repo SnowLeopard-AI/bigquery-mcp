@@ -925,7 +925,7 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "fastmcp", specifier = ">=2.5.2" },
+    { name = "fastmcp", specifier = "==2.5.2" },
     { name = "google-cloud-bigquery", specifier = ">=3.33.0" },
     { name = "typer", specifier = ">=0.16.0" },
 ]
