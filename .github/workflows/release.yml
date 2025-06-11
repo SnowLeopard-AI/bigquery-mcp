@@ -49,6 +49,7 @@ jobs:
         with:
           commit_message: "Bump version to ${{ steps.version.outputs.version }}"
           tagging_message: ${{ steps.version.outputs.version }}
+          push_options: '--force'
 
       - name: Create Release
         uses: softprops/action-gh-release@v2
