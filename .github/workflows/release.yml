@@ -49,6 +49,9 @@ jobs:
         with:
           commit_message: "Bump version to ${{ steps.version.outputs.version }}"
           tagging_message: ${{ steps.version.outputs.version }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+
 
       - name: Create Release
         uses: softprops/action-gh-release@v2

@@ -30,6 +30,8 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Linter 🧹
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
 
 
   test-coverage:
@@ -72,3 +74,5 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update Test Coverage 📈
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
