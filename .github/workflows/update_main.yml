@@ -30,7 +30,6 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Linter 🧹
-          push_options: '--force'
 
 
   test-coverage:
@@ -73,4 +72,3 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Update Test Coverage 📈
-          push_options: '--force'
