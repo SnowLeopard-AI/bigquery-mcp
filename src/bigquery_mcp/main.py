@@ -18,7 +18,6 @@ class MCPProtocol(str, Enum):
     streamable_http = "streamable-http"
 
 
-
 def mcp_app(
     mode: MCPProtocol = typer.Option(
         MCPProtocol.studio, help="MCP transport protocol"
