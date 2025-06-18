@@ -3,7 +3,7 @@
 [![Test](https://github.com/SnowLeopard-AI/bigquery-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/SnowLeopard-AI/bigquery-mcp/actions/workflows/test.yml)
 [![Coverage](https://raw.githubusercontent.com/SnowLeopard-AI/bigquery-mcp/refs/heads/main/tests/coverage.svg)](https://github.com/SnowLeopard-AI/bigquery-mcp/blob/main/tests/coverage.txt)
 [![PyPI - Version](https://img.shields.io/pypi/v/sl-bigquery-mcp)](https://pypi.org/project/sl-bigquery-mcp/)
-[![Discord](https://img.shields.io/discord/1379929746875617413?logo=discord&logoColor=white)](https://discord.gg/yYxYkzAv)
+[![Discord](https://img.shields.io/discord/1379929746875617413?logo=discord&logoColor=white)](https://discord.gg/WGAyr8NpEX)
 
 
 A Model Context Protocol (MCP) server for Google BigQuery that enables AI agents to interact with BigQuery databases through natural language queries and schema exploration.
@@ -177,7 +177,7 @@ npx @modelcontextprotocol/inspector uv run sl-bigquery-mcp --dataset bigquery-pu
 
 ## Contributing
 
-We welcome contributions! Please coordinate with us on [discord](https://discord.gg/yYxYkzAv) to ensure your changes can quicly make it into the repo. 
+We welcome contributions! Please coordinate with us on [discord](https://discord.gg/WGAyr8NpEX) to ensure your changes can quicly make it into the repo. 
 Communicating before coding always saves time.
 
 For logistics of contributing to an open source project, see the [first contributions repository](https://github.com/firstcontributions/first-contributions).
@@ -187,5 +187,5 @@ For logistics of contributing to an open source project, see the [first contribu
 **Issues**: [GitHub Issues](https://github.com/SnowLeopard-AI/bigquery-mcp/issues)  
 **Documentation**: [BigQuery Documentation](https://cloud.google.com/bigquery/docs)  
 **MCP Protocol**: [Model Context Protocol](https://modelcontextprotocol.io/)  
-**Contact**: [Discord Server](https://discord.gg/yYxYkzAv) 
+**Contact**: [Discord Server](https://discord.gg/WGAyr8NpEX) 
 
