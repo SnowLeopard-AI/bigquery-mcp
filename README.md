@@ -1,5 +1,5 @@
 <h1 style="display: flex; align-items: center;">
-<img src="logo.png" alt="Snow Leopard BigQuery MCP Logo" style="height: 1.5em;"/>
+<img src="logo.png" alt="Snow Leopard BigQuery MCP Logo" style="height: 1.2em;"/>
 Snow Leopard BigQuery MCP
 </h1>
 
