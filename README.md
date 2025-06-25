@@ -1,4 +1,9 @@
-# Snow Leopard BigQuery MCP
+<h1 style="display: flex; align-items: center;">
+<img src="logo.png" alt="Snow Leopard BigQuery MCP Logo" style="height: 1.2em;"/>
+Snow Leopard BigQuery MCP
+</h1>
+
+
 
 [![Test](https://github.com/SnowLeopard-AI/bigquery-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/SnowLeopard-AI/bigquery-mcp/actions/workflows/test.yml)
 [![Coverage](https://raw.githubusercontent.com/SnowLeopard-AI/bigquery-mcp/refs/heads/main/tests/coverage.svg)](https://github.com/SnowLeopard-AI/bigquery-mcp/blob/main/tests/coverage.txt)
