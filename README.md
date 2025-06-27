@@ -10,7 +10,6 @@ Snow Leopard BigQuery MCP
 [![Discord](https://img.shields.io/discord/1379929746875617413?logo=discord&logoColor=white)](https://discord.gg/WGAyr8NpEX)
 
 <br>
-<br>
 <div style="text-align: center;">
   <img src="logo.png" alt="Snow Leopard BigQuery MCP Logo" style="height: 8.0em;" />
 </div>
