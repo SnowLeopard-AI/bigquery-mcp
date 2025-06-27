@@ -1,5 +1,4 @@
 <h1 style="display: flex; align-items: center;">
-<img src="logo.png" alt="Snow Leopard BigQuery MCP Logo" style="height: 1.2em;"/>
 Snow Leopard BigQuery MCP
 </h1>
 
@@ -10,6 +9,12 @@ Snow Leopard BigQuery MCP
 [![PyPI - Version](https://img.shields.io/pypi/v/sl-bigquery-mcp)](https://pypi.org/project/sl-bigquery-mcp/)
 [![Discord](https://img.shields.io/discord/1379929746875617413?logo=discord&logoColor=white)](https://discord.gg/WGAyr8NpEX)
 
+<br>
+<div style="text-align: center;">
+  <img src="logo.png" alt="Snow Leopard BigQuery MCP Logo" style="height: 8.0em;" />
+</div>
+<br>
+<br>
 
 A Model Context Protocol (MCP) server for Google BigQuery that enables AI agents to interact with BigQuery databases through natural language queries and schema exploration.
 
