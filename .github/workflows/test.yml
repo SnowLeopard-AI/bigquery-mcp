@@ -43,7 +43,7 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: "projects/404381873253/locations/global/workloadIdentityPools/github-pool/providers/github-provider"
+          workload_identity_provider: "projects/404381873253/locations/global/workloadIdentityPools/github-pool/providers/github-bigquery-action-provider"
           service_account: 'github-actions-sa@sl-dev-462523.iam.gserviceaccount.com'
 
       - name: Install project and check uv.lock file is up to date (`uv lock` to fix)
