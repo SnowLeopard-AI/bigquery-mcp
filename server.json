@@ -7,13 +7,13 @@
     "url": "https://github.com/SnowLeopard-AI/bigquery-mcp",
     "source": "github"
   },
-  "version": "1.0.0",
+  "version": "0.1.7",
   "packages": [
     {
       "registry_type": "pypi",
       "registry_base_url": "https://pypi.org",
       "identifier": "sl-bigquery-mcp",
-      "version": "1.0.0",
+      "version": "0.1.7",
       "transport": {
         "type": "stdio"
       },
