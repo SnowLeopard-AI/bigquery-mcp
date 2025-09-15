@@ -1,0 +1,23 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-07-09/server.schema.json",
+  "name": "io.github.SnowLeopard-AI/bigquery-mcp",
+  "description": "A SnowLeopardAI-managed MCP server that provides access to Google BigQuery data.",
+  "status": "active",
+  "repository": {
+    "url": "https://github.com/SnowLeopard-AI/bigquery-mcp",
+    "source": "github"
+  },
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registry_type": "pypi",
+      "registry_base_url": "https://pypi.org",
+      "identifier": "sl-bigquery-mcp",
+      "version": "0.1.7",
+      "transport": {
+        "type": "stdio"
+      },
+      "environment_variables": []
+    }
+  ]
+}

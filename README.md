@@ -1,7 +1,7 @@
 <h1 style="display: flex; align-items: center;">
 Snow Leopard BigQuery MCP
 </h1>
-
+<!-- mcp-name: io.github.SnowLeopard-AI/bigquery-mcp -->
 
 
 [![Test](https://github.com/SnowLeopard-AI/bigquery-mcp/actions/workflows/test.yml/badge.svg)](https://github.com/SnowLeopard-AI/bigquery-mcp/actions/workflows/test.yml)
