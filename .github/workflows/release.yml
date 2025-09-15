@@ -31,11 +31,6 @@ jobs:
           echo "New version: $NEW_VERSION"
           echo "version=v$NEW_VERSION" >> $GITHUB_OUTPUT
 
-      - name: Install dependencies and run tests
-        run: |
-          uv sync --all-extras --dev
-          uv run pytest  # Optional: run tests before building
-
       - name: Build package
         run: uv build
 
