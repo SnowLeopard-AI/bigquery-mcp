@@ -13,7 +13,7 @@
       "registry_type": "pypi",
       "registry_base_url": "https://pypi.org",
       "identifier": "sl-bigquery-mcp",
-      "version": "0.1.7",
+      "version": "0.1.8",
       "transport": {
         "type": "stdio"
       },
